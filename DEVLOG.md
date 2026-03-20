@@ -1,0 +1,4 @@
+## commit [9446618] 3/20/2026
+Service Layer Pattern is chosen to be the initial design pattern of the project. The pattern helps with increase of modularity, maintainability, readability, and testability. Also with seperation of each layer,it greatly reduces the risk of breaking the project.
+Compared to other patterns, this pattern provides enough structure without unnecessary complexity early on, saving developing time.
+The project consists of frontend, backend, and database meaning and service layer pattern maps naturally to this pattern.

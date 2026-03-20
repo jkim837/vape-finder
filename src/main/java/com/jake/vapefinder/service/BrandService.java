@@ -1,30 +1,30 @@
 package com.jake.vapefinder.service;
 
-import com.jake.vapefinder.dto.BrandDto;
 import com.jake.vapefinder.model.Brand;
 import com.jake.vapefinder.repository.BrandRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
 public class BrandService {
 
-    private final BrandRepository brandRepository;
+    @Autowired
+    private BrandRepository brandRepository;
 
-    public BrandService(BrandRepository brandRepository) {
-        this.brandRepository = brandRepository;
+    public List<Brand> getAllBrands() {
+        return brandRepository.findAll();
     }
 
-    public List<BrandDto> getAllBrands() {
-        // TODO: load from repo and map to DTOs
-        return List.of();
+    public Brand getBrandById(Long id) {
+        return brandRepository.findById(id).orElseThrow(() -> new RuntimeException("Brand not found"));
     }
 
-    public BrandDto createBrand(BrandDto dto) {
-        // TODO: map dto -> entity, save, map back to dto
-        return null;
+    public Brand createBrand(Brand brand) {
+        return brandRepository.save(brand);
     }
 
-    // Helper methods for mapping between Brand and BrandDto will go here.
+    public void deleteBrand(Long id) {
+        brandRepository.deleteById(id);
+    }
 }

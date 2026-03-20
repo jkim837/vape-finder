@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "listing")
@@ -18,12 +19,14 @@ public class Listing {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    private Product product;
+     @ManyToOne(fetch = FetchType.LAZY)
+     @JoinColumn(name = "product_id")
+     private Product product;
 
-    @ManyToOne
-    private Store store;
+     @ManyToOne(fetch = FetchType.LAZY)
+     @JoinColumn(name = "store_id")
+     private Store store;
 
     private int stockLeft;
-    private double price;
+    private BigDecimal price;
 }

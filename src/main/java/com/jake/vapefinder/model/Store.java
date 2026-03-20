@@ -21,6 +21,10 @@ public class Store {
     @Column(nullable = false, unique = true)
     private String name;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "brand_id", nullable = true) // leave nullable true to allow stores with no brand.
+    private Brand brand;
+
     @Column(nullable = false)
     private String address;
 
@@ -28,10 +32,7 @@ public class Store {
     private String city;
 
     @Column(nullable = false)
-    private String state;
-
-    @Column(nullable = false)
-    private String zip;
+    private String postcode;
 
     @Column(nullable = false)
     private String country;

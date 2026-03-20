@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "Product")
+@Table(name = "product")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -24,6 +24,7 @@ public class Product {
     @Column(nullable = false) // in the future, we plan to use AI to fill in the category.
     private String category;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "brand_id", nullable = true)
     private Brand brand;
 }
