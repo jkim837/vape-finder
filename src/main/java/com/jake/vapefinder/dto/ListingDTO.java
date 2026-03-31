@@ -1,5 +1,7 @@
 package com.jake.vapefinder.dto;
 
+import java.math.BigDecimal;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,7 +9,12 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class BrandDTO {
+
+public class ListingDTO {
+
     private Long id;
-    private String name;
+    private ProductDTO product;
+    private StoreDTO store;
+    private int stockLeft;
+    private BigDecimal price;
 }
