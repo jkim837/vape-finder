@@ -1,10 +1,15 @@
 package com.jake.vapefinder.service;
 
-import com.jake.vapefinder.model.Listing;
-import com.jake.vapefinder.repository.ListingRepository;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.List;
+
+import com.jake.vapefinder.dto.ListingDTO;
+import com.jake.vapefinder.mapper.ListingMapper;
+import com.jake.vapefinder.model.Listing;
+import com.jake.vapefinder.repository.ListingRepository;
 
 @Service
 public class ListingService {
@@ -12,16 +17,25 @@ public class ListingService {
     @Autowired
     private ListingRepository listingRepository;
 
-    public List<Listing> getAllListings() {
-        return listingRepository.findAll();
+    @Autowired
+    private ListingMapper listingMapper;
+
+    public List<ListingDTO> getAllListings() {
+        return listingRepository.findAll()
+                .stream()
+                .map(listingMapper::toDto)
+                .collect(Collectors.toList());
     }
 
-    public Listing getListingById(Long id) {
-        return listingRepository.findById(id).orElseThrow(() -> new RuntimeException("Listing not found"));
+    public ListingDTO getListingById(Long id) {
+        Listing listing = listingRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Listing not found"));
+        return listingMapper.toDto(listing);
     }
 
-    public Listing createListing(Listing listing) {
-        return listingRepository.save(listing);
+    public ListingDTO createListing(ListingDTO listingDTO) {
+        Listing listing = listingMapper.toEntity(listingDTO);
+        return listingMapper.toDto(listingRepository.save(listing));
     }
 
     public void deleteListing(Long id) {

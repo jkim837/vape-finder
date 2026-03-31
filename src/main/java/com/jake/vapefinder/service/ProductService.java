@@ -1,10 +1,15 @@
 package com.jake.vapefinder.service;
 
-import com.jake.vapefinder.model.Product;
-import com.jake.vapefinder.repository.ProductRepository;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.List;
+
+import com.jake.vapefinder.dto.ProductDTO;
+import com.jake.vapefinder.mapper.ProductMapper;
+import com.jake.vapefinder.model.Product;
+import com.jake.vapefinder.repository.ProductRepository;
 
 @Service
 public class ProductService {
@@ -12,16 +17,25 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
+    @Autowired
+    private ProductMapper productMapper;
+
+    public List<ProductDTO> getAllProducts() {
+        return productRepository.findAll()
+                .stream()
+                .map(productMapper::toDto)
+                .collect(Collectors.toList());
     }
 
-    public Product getProductById(Long id) {
-        return productRepository.findById(id).orElseThrow(() -> new RuntimeException("Product not found"));
+    public ProductDTO getProductById(Long id) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+        return productMapper.toDto(product);
     }
 
-    public Product createProduct(Product product) {
-        return productRepository.save(product);
+    public ProductDTO createProduct(ProductDTO productDTO) {
+        Product product = productMapper.toEntity(productDTO);
+        return productMapper.toDto(productRepository.save(product));
     }
 
     public void deleteProduct(Long id) {
