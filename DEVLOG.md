@@ -2,3 +2,6 @@
 Service Layer Pattern is chosen to be the initial design pattern of the project. The pattern helps with increase of modularity, maintainability, readability, and testability. Also with seperation of each layer,it greatly reduces the risk of breaking the project. Other design patterns considered were event driven and hexagon architecture.
 Compared to other patterns, this pattern provides enough structure without unnecessary complexity early on, saving developing time.
 The project consists of frontend, backend, and database meaning and service layer pattern maps naturally to this pattern.
+
+## commit [5262c4d] 1/4/2026
+Added DTOs for all entities to decouple the API response from the database structure and prevent sensitive fields from being exposed to the frontend. MapStruct will be used for entity-to-DTO mapping for efficiency. Raw entities are never returned directly from controllers.
