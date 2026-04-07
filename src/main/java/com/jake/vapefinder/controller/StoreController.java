@@ -1,10 +1,18 @@
 package com.jake.vapefinder.controller;
 
-import com.jake.vapefinder.model.Store;
-import com.jake.vapefinder.service.StoreService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.jake.vapefinder.dto.StoreDTO;
+import com.jake.vapefinder.service.StoreService;
 
 @RestController
 @RequestMapping("/api/stores")
@@ -14,18 +22,18 @@ public class StoreController {
     private StoreService storeService;
 
     @GetMapping
-    public List<Store> getAllStores() {
+    public List<StoreDTO> getAllStores() {
         return storeService.getAllStores();
     }
 
     @GetMapping("/{id}")
-    public Store getStoreById(@PathVariable Long id) {
+    public StoreDTO getStoreById(@PathVariable Long id) {
         return storeService.getStoreById(id);
     }
 
     @PostMapping
-    public Store createStore(@RequestBody Store store) {
-        return storeService.createStore(store);
+    public StoreDTO createStore(@RequestBody StoreDTO storeDTO) {
+        return storeService.createStore(storeDTO);
     }
 
     @DeleteMapping("/{id}")

@@ -41,4 +41,11 @@ public class ProductService {
     public void deleteProduct(Long id) {
         productRepository.deleteById(id);
     }
+
+    public List<ProductDTO> searchProducts(String search) {
+    return productRepository.search(search)
+            .stream()
+            .map(productMapper::toDto)
+            .collect(Collectors.toList());
+}
 }
